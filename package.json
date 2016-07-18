@@ -18,5 +18,15 @@
   "bugs": {
     "url": "https://github.com/majcn/hs-collection/issues"
   },
-  "homepage": "https://github.com/majcn/hs-collection#readme"
+  "homepage": "https://github.com/majcn/hs-collection#readme",
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-core": "^6.10.4",
+    "babel-preset-es2017": "^1.4.0"
+  },
+  "babel": {
+    "presets": [
+      "es2017"
+    ]
+  }
 }
