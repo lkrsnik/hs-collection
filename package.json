@@ -1,0 +1,22 @@
+{
+  "name": "hs-collection",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.s",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/majcn/hs-collection.git"
+  },
+  "keywords": [
+    "hs"
+  ],
+  "author": "Gregor Majcen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/majcn/hs-collection/issues"
+  },
+  "homepage": "https://github.com/majcn/hs-collection#readme"
+}
