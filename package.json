@@ -3,22 +3,23 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "private": true,
+  "license": "UNLICENSED",
+  "author": "Gregor Majcen <majcn.m@gmail.com>",
+  "homepage": "https://github.com/majcn/hs-collection#readme",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/majcn/hs-collection.git"
   },
   "keywords": [
     "hs"
   ],
-  "author": "Gregor Majcen",
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/majcn/hs-collection.git"
+  },
   "bugs": {
     "url": "https://github.com/majcn/hs-collection/issues"
   },
-  "homepage": "https://github.com/majcn/hs-collection#readme",
   "devDependencies": {
     "babel-cli": "^6.10.1",
     "babel-core": "^6.10.4",
