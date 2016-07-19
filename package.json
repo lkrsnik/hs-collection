@@ -28,5 +28,9 @@
     "presets": [
       "es2017"
     ]
+  },
+  "dependencies": {
+    "jsdom": "^9.4.1",
+    "node-fetch": "^1.5.3"
   }
 }
