@@ -1,3 +1,5 @@
+import "babel-polyfill"; // need for Object.values
+
 import fetch from 'node-fetch'
 import jsdom from './jsdom-promise'
 
@@ -14,7 +16,7 @@ function mergeResults(hsJson, hearthPwnCollection) {
     }
 
     if (!resultItem.hsJson) {
-      // TODO: error
+      throw `Card '${cardName}' does not exists in database`
     }
 
     let count = parseInt(i.querySelector('.inline-card-count').getAttribute('data-card-count'))
@@ -32,16 +34,20 @@ function mergeResults(hsJson, hearthPwnCollection) {
 }
 
 async function test(username) {
-  let hsJson = await fetch('https://api.hearthstonejson.com/v1/latest/enUS/cards.collectible.json')
-    .then(x => x.json())
+  try {
+    let hsJson = await fetch('https://api.hearthstonejson.com/v1/latest/enUS/cards.collectible.json')
+      .then(x => x.json())
 
-  let hearthPwnCollection = await fetch(`http://www.hearthpwn.com/members/${username}/collection`)
-    .then(x => x.text())
-    .then(html => jsdom(html))
+    let hearthPwnCollection = await fetch(`http://www.hearthpwn.com/members/${username}/collection`)
+      .then(x => x.text())
+      .then(html => jsdom(html))
 
-  let result = mergeResults(hsJson, hearthPwnCollection)
+    let result = mergeResults(hsJson, hearthPwnCollection)
 
-  console.log(JSON.stringify(Object.values(result)))
+    console.log(JSON.stringify(Object.values(result)))
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 test('majcn')
