@@ -65,5 +65,5 @@ var server = restify.createServer({
 server.get('api/v1/cards/:username', getCardsByUsername)
 
 server.listen(8080, function() {
-  console.log('%s listening at %s', server.name, server.url)
+  console.log(`${server.name} listening at ${server.url}`)
 })
