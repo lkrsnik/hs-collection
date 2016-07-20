@@ -1,5 +1,6 @@
 import restify from 'restify'
 
+import _ from 'lodash'
 import fetch from 'node-fetch'
 import cheerio from 'cheerio'
 
@@ -25,15 +26,7 @@ async function getCardsByUsername(req, res, next) {
     let collectionCount = getCountGroupByName(hearthPwnCollection)
 
     let result = hsJson.map(el => ({
-      'card': {
-        'id': el.id,
-        'name': el.name,
-        'set': el.set,
-        'class': el.playerClass,
-        'type': el.type,
-        'rarity': el.rarity,
-        'cost': el.cost
-      },
+      'card': _.pick(['id', 'name', 'set', 'class', 'type', 'rarity', 'cost']),
       'count': collectionCount[el.name]
     }))
 
