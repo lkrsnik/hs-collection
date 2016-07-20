@@ -1,50 +1,41 @@
-import "babel-polyfill"; // need for Object.values
-
 import fetch from 'node-fetch'
-import jsdom from './jsdom-promise'
+import cheerio from 'cheerio'
 
-function mergeResults(hsJson, hearthPwnCollection) {
-  let result = {}
-  for (let i of hearthPwnCollection.document.querySelectorAll('.card-image-item')) {
-    let cardName = i.getAttribute('data-card-name')
+function getCountGroupByName(hearthPwnCollection) {
+    let $ = cheerio.load(hearthPwnCollection)
+    let result = {}
+    $('.card-image-item.owns-card').each((i, el) => {
+      let $el = $(el)
+      let cardName = $el.data('cardName')
+      let cardCount = parseInt($el.find('.inline-card-count').data('cardCount'), 10)
+      result[cardName] = (result[cardName] || 0) + cardCount
+    })
 
-    let resultItem = result[cardName] || {
-      'hsJson': hsJson.find(el => el.name === cardName),
-      'hearthpwn' : {
-        'count': 0
-      }
-    }
-
-    if (!resultItem.hsJson) {
-      throw `Card '${cardName}' does not exists in database`
-    }
-
-    let count = parseInt(i.querySelector('.inline-card-count').getAttribute('data-card-count'))
-    resultItem.hearthpwn.count += count
-
-    let isGold = i.getAttribute('data-is-gold') === 'True'
-    if (!isGold) {
-      resultItem.hearthpwn.imgUrl = i.querySelector('a img').getAttribute('src')
-    }
-
-    result[cardName] = resultItem
-  }
-
-  return result;
+    return result
 }
 
 async function test(username) {
   try {
-    let hsJson = await fetch('https://api.hearthstonejson.com/v1/latest/enUS/cards.collectible.json')
-      .then(x => x.json())
+    let hsJson = (await fetch('https://api.hearthstonejson.com/v1/latest/enUS/cards.collectible.json').then(x => x.json()))
+      .filter(x => x.cost)
 
-    let hearthPwnCollection = await fetch(`http://www.hearthpwn.com/members/${username}/collection`)
-      .then(x => x.text())
-      .then(html => jsdom(html))
+    let hearthPwnCollection = await fetch(`http://www.hearthpwn.com/members/${username}/collection`).then(x => x.text())
+    let collectionCount = getCountGroupByName(hearthPwnCollection)
 
-    let result = mergeResults(hsJson, hearthPwnCollection)
+    let result = hsJson.map(el => ({
+      'card': {
+        'id': el.id,
+        'name': el.name,
+        'set': el.set,
+        'class': el.playerClass,
+        'type': el.type,
+        'rarity': el.rarity,
+        'cost': el.cost
+      },
+      'count': collectionCount[el.name]
+    }))
 
-    console.log(JSON.stringify(Object.values(result)))
+    console.log(result)
   } catch (e) {
     console.log(e)
   }
