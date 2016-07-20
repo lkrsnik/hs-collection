@@ -4,6 +4,7 @@ import _ from 'lodash'
 import fetch from 'node-fetch'
 import cheerio from 'cheerio'
 
+
 function getCountGroupByName(hearthPwnCollection) {
     let $ = cheerio.load(hearthPwnCollection)
     let result = {}
