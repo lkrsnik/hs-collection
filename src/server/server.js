@@ -11,7 +11,7 @@ function getCountGroupByName(hearthPwnCollection) {
     $('.card-image-item.owns-card').each((i, x) => {
       let $x = $(x)
       let cardName = $x.data('cardName')
-      let cardCount = parseInt($el.find('.inline-card-count').data('cardCount'), 10)
+      let cardCount = parseInt($x.find('.inline-card-count').data('cardCount'), 10)
       result[cardName] = (result[cardName] || 0) + cardCount
     })
 
