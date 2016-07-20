@@ -1,3 +1,5 @@
+import restify from 'restify'
+
 import fetch from 'node-fetch'
 import cheerio from 'cheerio'
 
@@ -14,12 +16,12 @@ function getCountGroupByName(hearthPwnCollection) {
     return result
 }
 
-async function test(username) {
+async function getCardsByUsername(req, res, next) {
   try {
     let hsJson = (await fetch('https://api.hearthstonejson.com/v1/latest/enUS/cards.collectible.json').then(x => x.json()))
       .filter(x => x.cost)
 
-    let hearthPwnCollection = await fetch(`http://www.hearthpwn.com/members/${username}/collection`).then(x => x.text())
+    let hearthPwnCollection = await fetch(`http://www.hearthpwn.com/members/${req.params.username}/collection`).then(x => x.text())
     let collectionCount = getCountGroupByName(hearthPwnCollection)
 
     let result = hsJson.map(el => ({
@@ -35,10 +37,18 @@ async function test(username) {
       'count': collectionCount[el.name]
     }))
 
-    console.log(result)
+    res.send(200, result)
   } catch (e) {
-    console.log(e)
+    res.send(400, e)
   }
+
+  return next();
 }
 
-test('majcn')
+
+var server = restify.createServer()
+server.get('api/v1/cards/:username', getCardsByUsername)
+
+server.listen(8080, function() {
+  console.log('%s listening at %s', server.name, server.url)
+})
