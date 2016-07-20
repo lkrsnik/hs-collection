@@ -23,7 +23,7 @@ function throwIfEmpty(o, error) {
     throw error()
   }
 
-  return o;
+  return o
 }
 
 function getCollectionCount(username) {
@@ -55,7 +55,7 @@ async function getCardsByUsername(req, res, next) {
     res.send(400, e)
   }
 
-  return next();
+  return next()
 }
 
 
