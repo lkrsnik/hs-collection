@@ -87,8 +87,8 @@ function resp(promise, res, next) {
 }
 
 function respDummy(req, res, next) {
-  let dummyResult = JSON.parse(require('fs').readFileSync('dummy.json', 'utf8'));
-  resp.send(dummyResult)
+  let dummyResult = JSON.parse(require('fs').readFileSync(require('path').join(__dirname, 'dummy/dummy.json'), 'utf8'));
+  res.send(dummyResult)
   next()
 }
 
