@@ -48,7 +48,7 @@ function getCollectionCount(username) {
 function getHsJson() {
   return fetch('https://api.hearthstonejson.com/v1/latest/enUS/cards.collectible.json')
     .then(x => x.json())
-    .then(x => x.filter(xx => xx.cost !== undefined)) // if exists
+    .then(x => x.filter(xx => 'cost' in xx))
 }
 
 function createResult(collectionCount, hsJson) {
@@ -69,7 +69,7 @@ function getCardsByUsername(usernames) {
 
   let hsJson = getHsJson()
 
-  return Promise.all([collectionsPromise, hsJson])
+  return Promise.all([collectionCount, hsJson])
     .then(x => createResult(x[0], x[1]))
 }
 
