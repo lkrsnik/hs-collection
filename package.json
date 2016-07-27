@@ -8,7 +8,8 @@
   "author": "Gregor Majcen <majcn.m@gmail.com>",
   "homepage": "https://github.com/majcn/hs-collection#readme",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
   },
   "keywords": [
     "hs"
@@ -22,18 +23,23 @@
   },
   "babel": {
     "presets": [
-      "es2017"
+      "es2017",
+      "react"
     ]
   },
   "devDependencies": {
-    "babel-cli": "^6.10.1",
-    "babel-core": "^6.10.4",
-    "babel-preset-es2017": "^1.4.0"
+    "babel-core": "^6.11.4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2017": "^1.4.0",
+    "babel-preset-react": "^6.11.1",
+    "webpack": "^1.13.1"
   },
   "dependencies": {
     "cheerio": "^0.20.0",
     "lodash": "^4.13.1",
     "node-fetch": "^1.5.3",
+    "react": "^15.2.1",
+    "react-dom": "^15.2.1",
     "restify": "^4.1.1"
   }
 }
