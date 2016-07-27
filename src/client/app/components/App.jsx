@@ -26,7 +26,7 @@ export default class App extends React.Component {
       <div>
         {this.state.cards.map(c =>
           <div>
-            <img src={ require('../resources/slike/' + c.card.id + '.png') } /> 
+            <img src={ require('../../resources/slike/' + c.card.id + '.png') } /> 
             <div> {c.count.join(',')} </div>
           </div>
         )}
