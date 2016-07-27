@@ -9,7 +9,8 @@
   "homepage": "https://github.com/majcn/hs-collection#readme",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "build": "webpack",
+    "start": "webpack-dev-server --content-base public"
   },
   "keywords": [
     "hs"
@@ -32,14 +33,19 @@
     "babel-loader": "^6.2.4",
     "babel-preset-es2017": "^1.4.0",
     "babel-preset-react": "^6.11.1",
-    "webpack": "^1.13.1"
+    "file-loader": "^0.9.0",
+    "html-webpack-plugin": "^2.22.0",
+    "html-webpack-template": "^5.0.0",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
     "cheerio": "^0.20.0",
-    "lodash": "^4.13.1",
+    "lodash": "^4.14.0",
     "node-fetch": "^1.5.3",
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
-    "restify": "^4.1.1"
+    "restify": "^4.1.1",
+    "whatwg-fetch": "^1.0.0"
   }
 }

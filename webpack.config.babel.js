@@ -1,3 +1,4 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 const PATHS = {
@@ -21,10 +22,23 @@ module.exports = {
         include: PATHS.app
       },
       {
+        test: /\.(jpg|png)$/,
+        loaders: ['file-loader'],
+        include: PATHS.app
+      },
+      {
         test: /\.jsx?$/,
         loaders: ['babel?cacheDirectory'],
         include: PATHS.app
       }
     ]
-  }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'node_modules/html-webpack-template/index.ejs',
+      title: 'HS collection',
+      appMountId: 'app',
+      inject: false
+    })
+  ]
 }
