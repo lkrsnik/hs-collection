@@ -20,15 +20,15 @@
   "bugs": {
     "url": "https://github.com/majcn/hs-collection/issues"
   },
-  "devDependencies": {
-    "babel-cli": "^6.10.1",
-    "babel-core": "^6.10.4",
-    "babel-preset-es2017": "^1.4.0"
-  },
   "babel": {
     "presets": [
       "es2017"
     ]
+  },
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-core": "^6.10.4",
+    "babel-preset-es2017": "^1.4.0"
   },
   "dependencies": {
     "cheerio": "^0.20.0",
