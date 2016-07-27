@@ -86,12 +86,20 @@ function resp(promise, res, next) {
     .catch(e => next(e))
 }
 
+function respDummy(req, res, next) {
+  let dummyResult = JSON.parse(require('fs').readFileSync('dummy.json', 'utf8'));
+  resp.send(dummyResult)
+  next()
+}
+
 var server = restify.createServer({
   name: 'HS-Collection'
 })
 server.use(restify.queryParser())
+server.use(restify.CORS())
 server.get('api/v1/cards', respCardsByUsername)
+server.get('api/v1/dummy', respDummy)
 
-server.listen(8080, function() {
+server.listen(8081, function() {
   console.log(`${server.name} listening at ${server.url}`)
 })
