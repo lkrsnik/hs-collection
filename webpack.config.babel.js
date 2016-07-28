@@ -2,13 +2,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 const PATHS = {
-  app: path.join(__dirname, 'src/client/app'),
+  client: path.join(__dirname, 'src/client'),
   build: path.join(__dirname, 'public')
 }
 
 module.exports = {
   entry: {
-    app: PATHS.app + '/index.jsx'
+    app: path.join(PATHS.client, 'app/index.jsx')
   },
   output: {
     path: PATHS.build,
@@ -19,17 +19,17 @@ module.exports = {
       {
         test: /\.css$/,
         loaders: ['style', 'css'],
-        include: PATHS.app
+        include: PATHS.client
       },
       {
-        test: /\.(jpg|png)$/,
+        test: /\.(jpg|png|svg|ttf|woff|woff2|eot)$/,
         loaders: ['file-loader'],
-        include: PATHS.app
+        include: PATHS.client
       },
       {
         test: /\.jsx?$/,
         loaders: ['babel?cacheDirectory'],
-        include: PATHS.app
+        include: PATHS.client
       }
     ]
   },

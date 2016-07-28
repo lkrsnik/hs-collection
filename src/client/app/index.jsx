@@ -1,5 +1,7 @@
 // import './main.css'
 
+import '../resources/css/bootstrap.min.css'
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/App.jsx'
