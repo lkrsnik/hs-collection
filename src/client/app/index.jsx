@@ -1,5 +1,3 @@
-// import './main.css'
-
 import '../resources/css/bootstrap.min.css'
 
 import React from 'react'
