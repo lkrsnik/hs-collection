@@ -8,11 +8,12 @@ const PATHS = {
 
 module.exports = {
   entry: {
+    fetch: 'whatwg-fetch',
     app: path.join(PATHS.client, 'app/index.jsx')
   },
   output: {
     path: PATHS.build,
-    filename: 'bundle.js'
+    filename: '[name].bundle.js'
   },
   module: {
     loaders: [

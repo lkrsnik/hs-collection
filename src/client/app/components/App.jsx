@@ -1,5 +1,5 @@
 import React from 'react'
-import 'whatwg-fetch'
+
 
 import _ from 'lodash'
 
