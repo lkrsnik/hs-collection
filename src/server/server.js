@@ -73,6 +73,10 @@ server.use(restify.CORS())
 server.get('api/v1/cards', respCardsByUsername)
 server.get('api/v1/dummy', respDummy)
 
+// server.on('uncaughtException', (req, res, route, err) => {
+//   console.log(err)
+// })
+
 server.listen(8081, function() {
   console.log(`${server.name} listening at ${server.url}`)
 })
