@@ -3,29 +3,9 @@
 var restify = require('restify')
 var _ = require('lodash')
 var fetch = require('node-fetch')
-var cheerio = require('cheerio')
 
+var countProvider = require('./count_providers/hearthpwn.js')
 
-function getCountGroupByName(hearthPwnCollection) {
-    let $ = cheerio.load(hearthPwnCollection)
-    let result = {}
-    $('.card-image-item').each((i, x) => {
-      let $x = $(x)
-      let cardName = $x.data('cardName')
-      let cardCount = parseInt($x.find('.inline-card-count').data('cardCount'), 10)
-      result[cardName] = (result[cardName] || 0) + cardCount
-    })
-
-    return result
-}
-
-function throwIfEmpty(o, error) {
-  if (_.isEmpty(o)) {
-    throw error()
-  }
-
-  return o
-}
 
 function mergeCollection(collections) {
   let result = {}
@@ -36,13 +16,6 @@ function mergeCollection(collections) {
   }
 
   return result
-}
-
-function getCollectionCount(username) {
-  return fetch(`http://www.hearthpwn.com/members/${username}/collection`)
-    .then(x => x.text())
-    .then(x => getCountGroupByName(x))
-    .then(x => throwIfEmpty(x, () => new Error(`There are no cards for username: ${username}`)))
 }
 
 function getHsJson() {
@@ -63,7 +36,7 @@ function createResult(collectionCount, hsJson) {
 }
 
 function getCardsByUsername(usernames) {
-  let collectionByUsername = usernames.map(u => getCollectionCount(u))
+  let collectionByUsername = usernames.map(u => countProvider(u))
   let collectionCount = Promise.all(collectionByUsername)
     .then(x => mergeCollection(x))
 
