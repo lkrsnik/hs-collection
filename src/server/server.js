@@ -54,14 +54,14 @@ function respCardsByUsername(req, res, next) {
 
 function resp(promise, res, next) {
   promise
-    .then(val => res.send(val))
+    .then(val => res.json(val))
     .then(() => next())
     .catch(e => next(e))
 }
 
 function respDummy(req, res, next) {
   let dummyResult = JSON.parse(require('fs').readFileSync(require('path').join(__dirname, 'dummy/dummy.json'), 'utf8'));
-  res.send(dummyResult)
+  res.json(dummyResult)
   next()
 }
 
