@@ -16,7 +16,7 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    this.serverRequest = fetch('http://localhost:8081/api/v1/dummy') //cards?u=majcn&u=krsniiik&u=Pandaa12')
+    this.serverRequest = fetch('http://localhost:8081/api/v1/cards?u=majcn&u=krsniiik&u=Pandaa12')
       .then(x => x.json())
       .then(x => this.setState({'cards': x}))
   }
