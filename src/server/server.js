@@ -1,10 +1,6 @@
 'use strict'
 
 var restify = require('restify')
-
-var bunyan = require('bunyan')
-var restifyBunyanLogger = require('restify-bunyan-logger');
-
 var _ = require('lodash')
 var fetch = require('node-fetch')
 
@@ -70,16 +66,12 @@ function respDummy(req, res, next) {
 }
 
 var server = restify.createServer({
-  name: 'HS-Collection',
-  log: bunyan.createLogger({name: 'HS-Collection'})
+  name: 'HS-Collection'
 })
-server.use(restify.requestLogger())
 server.use(restify.queryParser())
 server.use(restify.CORS())
 server.get('api/v1/cards', respCardsByUsername)
 server.get('api/v1/dummy', respDummy)
-
-server.on('after', restifyBunyanLogger());
 
 server.listen(8081, function() {
   console.log(`${server.name} listening at ${server.url}`)
