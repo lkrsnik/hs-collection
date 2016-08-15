@@ -30,9 +30,6 @@ function createResult(collectionCount, hsJson) {
       'card': _.pick(x, ['id', 'name', 'set', 'playerClass', 'type', 'rarity', 'cost']),
       'count': collectionCount[x.name]
     }))
-    // .filter(x => x.count > 0)
-    // .filter(x => x.card.rarity === 'EPIC' || x.card.rarity === 'LEGENDARY')
-    // .sort((a,b) => a.card.cost - b.card.cost)
 }
 
 function getCardsByUsername(usernames) {
@@ -49,6 +46,28 @@ function getCardsByUsername(usernames) {
 function respCardsByUsername(req, res, next) {
   let usernames = [].concat(req.query.u)
   let resultPromise = getCardsByUsername(usernames)
+  resp(resultPromise, res, next)
+}
+
+function randomPool(collection, limit) {
+  let result = []
+  for (let card of collection) {
+    let count = _.min((card.count || [0]).concat(card.card.rarity === 'LEGENDARY' ? 1 : 2))
+    for (let i = 0; i < count; i++) {
+      result.push(card.card)
+    }
+  }
+
+  return _.sampleSize(result, limit)
+    .sort((a,b) => a.playerClass.localeCompare(b.playerClass))
+    .sort((a,b) => a.cost - b.cost)
+}
+
+function respRandomPool(req, res, next) {
+  let usernames = [].concat(req.query.u)
+  let limit = /^(0|[1-9]\d*)$/.test(req.params.limit) ? parseInt(req.params.limit, 10) : 0
+
+  let resultPromise = getCardsByUsername(usernames).then(c => randomPool(c, limit))
   resp(resultPromise, res, next)
 }
 
@@ -70,8 +89,9 @@ var server = restify.createServer({
 })
 server.use(restify.queryParser())
 server.use(restify.CORS())
-server.get('api/v1/cards', respCardsByUsername)
-server.get('api/v1/dummy', respDummy)
+server.get('/api/v1/cards', respCardsByUsername)
+server.get('/api/v1/dummy', respDummy)
+server.get('/api/v1/randompool/:limit', respRandomPool)
 
 // server.on('uncaughtException', (req, res, route, err) => {
 //   console.log(err)
