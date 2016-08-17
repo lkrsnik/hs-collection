@@ -7,13 +7,22 @@ const PATHS = {
 }
 
 module.exports = {
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: PATHS.client+'/app/index.ejs',
+      title: 'HS collection',
+      appMountId: 'app',
+      inject: false
+    })
+  ],
   entry: {
     fetch: 'whatwg-fetch',
     app: path.join(PATHS.client, 'app/index.jsx')
   },
+  devtool: 'eval-source-map',
   output: {
     path: PATHS.build,
-    filename: '[name].bundle.js'
+    filename: '[name].[hash].js'
   },
   module: {
     loaders: [
@@ -33,13 +42,5 @@ module.exports = {
         include: PATHS.client
       }
     ]
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: 'node_modules/html-webpack-template/index.ejs',
-      title: 'HS collection',
-      appMountId: 'app',
-      inject: false
-    })
-  ]
+  }
 }
